@@ -11,7 +11,7 @@
   *                   (if there are not numbers the value will be 0)
   */
 
-const getItemsMaxNumber = items => { 
+const getItemsMaxNumber = (items = []) => { 
 
     //numbers represented in binary, hexadecimal and octal could also be validated
     const regex = /([+-])?(\d[\d]*)(\.\d*)?([e|E]\d*)?/gi;
@@ -20,7 +20,8 @@ const getItemsMaxNumber = items => {
     let largest = items.map((item) => item?.name?.toString().match(regex))
 
     // change the array depth
-    largest = largest.toString().split(",")
+    largest = largest.flat()
+	
     // sort array 
     largest.sort((a, b) => b - a)
 	
