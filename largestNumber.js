@@ -13,32 +13,19 @@
 
 const getItemsMaxNumber = items => { 
 
-    //initial values
-    let largest = 0;
-    let currentvalue=0;
-    const regex = /([+-])?(\d[\d]*)(\.\d*)?([e|E]\d*)?/;
     //numbers represented in binary, hexadecimal and octal could also be validated
+    const regex = /([+-])?(\d[\d]*)(\.\d*)?([e|E]\d*)?/gi;
+    
+    // get only numbers
+    let largest = items.map((item) => item?.name?.toString().match(regex))
 
-    // loop array 
-	  items.forEach(value => {
-
-  		// check if there is a string value in name field
-  		if(typeof(value.name) !== 'string') return;
-
-  		// find number in the regular expression
-      currentvalue = regex.exec(value.name);
-      //console.log(currentvalue[0]);
-          
-      // only if there is a number in the string, compare it 
-      //with the currently largest (if it is bigger, update the value)
-  		if(currentvalue && currentvalue[0] > largest){
-  			largest = parseFloat(currentvalue);
-  		}	
-  		
-  	})
+    // change the array depth
+    largest = largest.toString().split(",")
+    // sort array 
+    largest.sort((a, b) => b - a)
 	
-	// it returns the largest number
-	return largest;
+    // return the largest number
+    return largest[0] || 0;
 };
 
 /*integers = should be 11*/
@@ -50,7 +37,7 @@ const items = [ { name: 'item 1' }, { name: 'item -2' }, { name: 'item 11' }, { 
 /*no numbers = should be 0*/
 //const items = [ { name: 'item' }, { name: 'item' }, { name: 'item' }, { name: 'item' }, { name: 'item' } ];
 
-/*decimals = should be 5.1*/
+/*decimals = should be 34*/
 //const items = [ { name1: 'item 29' }, { name: 'item 5.1 value' }, { name: 'item -23' }, { name: 'item -3.5 example' }, { name: 34 } ];
 
 //get the largest
