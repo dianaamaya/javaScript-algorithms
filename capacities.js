@@ -30,10 +30,10 @@
     },
   }]
 
+  // forEach solution
   function getTotal( initialCapacities = {}, data = [] ) {
    
     const totals = { ...initialCapacities }
-  
     data.forEach(element => {
         const currentObj = element.total.amount;
         if (totals[currentObj.asset.currency]) {
@@ -44,9 +44,21 @@
             totals[currentObj.asset.currency] = currentObj.quantity
         }*/
     });
-
     return totals
-
   }
-
   console.log(getTotal(initialCapacities, data))
+  
+  
+  //reduce solution
+  function getTotalReduce( initialCapacities = {}, data = [] ) {
+   
+    return data.reduce((acumulator,currentObj) => {
+        if (acumulator[currentObj.total.amount.asset.currency]) {
+            acumulator[currentObj.total.amount.asset.currency] += currentObj.total.amount.quantity 
+        } /*else {
+            acumulator[currentObj.total.amount.asset.currency] = currentObj.total.amount.quantity
+        }*/
+        return acumulator
+    }, initialCapacities)
+  }
+  console.log(getTotalReduce(initialCapacities, data))
