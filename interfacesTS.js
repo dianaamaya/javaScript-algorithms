@@ -88,12 +88,20 @@
   // Get parameters and return values
   const getWorkersByRole = (role: PersonRol, data: Record<PersonRol, PersonOptional[]>): string  => 
     `${data[role].length} worker(s) as ${role}` ;
-  
 
-  console.log(getWorkersByRole('admin', personRol))
+  console.log(getWorkersByRole('admin', personRol));
+    
+  // Get workers quantity by role
+  type personsQtyByRole = { role: PersonRol, qty: number }
+  const getQtyByRole = (data: Record<PersonRol, PersonOptional[]>): personsQtyByRole[]  => {
 
+      const workersByRole:personsQtyByRole[] = [];
 
-
-
-
-  
+      return (Object.keys(data) as (keyof typeof data)[]).reduce((acumulator, current) => {
+        acumulator.push({role: current, qty: data[current].length})
+        return acumulator
+      }, workersByRole);
+  } 
+   
+  console.log(getQtyByRole(personRol))
+    
